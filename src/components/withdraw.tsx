@@ -137,9 +137,7 @@ const Withdraw = () => {
               className={`flex-1 py-3 px-4 rounded-xl font-medium transition-all bg-[#f5d469] text-black border-2 border-[#f5d469]}`}
             >
               <p> Ethereum (USDT)</p>
-              <p className='text-[8px]'>
-                (0xdAC17F958D2ee523a2206206994597C13D831ec7)
-              </p>
+              <p className='text-[8px]'>({usdtContractAddress})</p>
             </button>
           </div>
         </div>
