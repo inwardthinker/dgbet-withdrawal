@@ -12,6 +12,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { getRpcUrl } from "@/helper/contants"
 
 export const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_ID as string
+export const clientId = process.env.NEXT_PUBLIC_PRIVY_CLIENT_ID as string
+export const privyAppId = process.env.NEXT_PUBLIC_PRIVY_APP_ID as string
 
 export const publicClient = createPublicClient({
   chain: mainnet,
@@ -30,8 +32,8 @@ const queryClient = new QueryClient()
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <PrivyProvider
-      appId={process.env.NEXT_PUBLIC_PRIVY_APP_ID || ""}
-      clientId='client-WY5gEtQfKBuiHjdBw3LhpxwGUmoFnbmXXsbDjUyP86qrJ'
+      appId={privyAppId}
+      clientId={clientId}
       config={{
         loginMethods: ["email", "google", "twitter", "discord", "wallet"],
         appearance: {
