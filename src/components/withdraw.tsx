@@ -36,9 +36,10 @@ const Withdraw = () => {
   const { user } = usePrivy()
   const { client } = useSmartWallets()
 
-  const smartWallet = user?.linkedAccounts.find(
-    (account) => account.type === "smart_wallet"
-  )
+  const smartWallet =
+    user?.linkedAccounts.find((account) => account.type === "smart_wallet") ||
+    user?.linkedAccounts.find((account) => account.type === "wallet")
+
   const userWalletAddress = smartWallet?.address as Address | undefined
 
   const { data: balance, refetch: refetchBalance } = useReadContract({
@@ -111,6 +112,8 @@ const Withdraw = () => {
     }
   }, [txHash, isLoading])
 
+  const buttonDisabled =
+    isLoading || !userWalletAddress || smartWallet?.type !== "smart_wallet"
   // Show network switch prompt if not on Polygon
   if (chainId && chainId !== 1) {
     return <ChainError chainId={chainId} />
@@ -134,7 +137,7 @@ const Withdraw = () => {
               className={`flex-1 py-3 px-4 rounded-xl font-medium transition-all bg-[#f5d469] text-black border-2 border-[#f5d469]}`}
             >
               <p> Ethereum (USDT)</p>
-              <p className='text-[10px]'>
+              <p className='text-[8px]'>
                 (0xdAC17F958D2ee523a2206206994597C13D831ec7)
               </p>
             </button>
@@ -228,7 +231,7 @@ const Withdraw = () => {
 
         <button
           onClick={handleWithdrawWithEmbeddedWallet}
-          disabled={isLoading || !userWalletAddress}
+          disabled={buttonDisabled}
           className={`w-full py-2 rounded-xl font-bold text-lg transition-colors disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer ${
             isLoading
               ? "bg-gray-600 text-gray-400 cursor-not-allowed"

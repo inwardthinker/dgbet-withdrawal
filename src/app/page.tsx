@@ -8,6 +8,10 @@ export default function Home() {
   const { ready, authenticated, login, user } = usePrivy()
   const { logout } = useLogout()
 
+  const smartWallet =
+    user?.linkedAccounts.find((account) => account.type === "smart_wallet") ||
+    user?.linkedAccounts.find((account) => account.type === "wallet")
+
   const handleLogout = () => {
     logout()
   }
@@ -35,8 +39,8 @@ export default function Home() {
             {authenticated ? (
               <div className='flex items-center space-x-2'>
                 <button className='bg-[#f5d469] text-black px-4 py-2 rounded-lg font-bold'>
-                  {user?.smartWallet?.address?.slice(0, 6)}...
-                  {user?.smartWallet?.address?.slice(-4)}
+                  {smartWallet?.address?.slice(0, 6)}...
+                  {smartWallet?.address?.slice(-4)}
                 </button>
                 <button
                   className='bg-[#f5d469] text-black px-4 py-2 rounded-lg font-bold cursor-pointer'
